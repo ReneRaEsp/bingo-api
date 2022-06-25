@@ -24,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('number', NumberController::class);
 
 Route::resource('card', CardController::class);
+
+Route::put('card/mark/{id}', 'App\Http\Controllers\CardController@markSquare');
