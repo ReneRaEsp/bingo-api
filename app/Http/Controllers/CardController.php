@@ -59,28 +59,32 @@ class CardController extends Controller
         }
         $i = 0;
         foreach($column_i as $number) {
-            if ($number == $number_called){
+            if ((int)$number == $number_called){
+                $column_i[$i] = (int)$column_i[$i];
                 $column_i[$i] = -$column_i[$i];
             }
             $i++;
         }
         $i = 0;
         foreach($column_n as $number) {
-            if ($number == $number_called){
+            if ((int)$number == $number_called){
+                $column_n[$i] = (int)$column_i[$i];
                 $column_n[$i] = -$column_n[$i];
             }
             $i++;
         }
         $i = 0;
         foreach($column_g as $number) {
-            if ($number == $number_called){
+            if ((int)$number == $number_called){
+                $column_g[$i] = (int)$column_g[$i];
                 $column_g[$i] = -$column_g[$i];
             }
             $i++;
         }
         $i = 0;
         foreach($column_o as $number) {
-            if ($number == $number_called){
+            if ((int)$number == $number_called){
+                $column_o[$i] = (int)$column_o[$i];
                 $column_o[$i] = -$column_o[$i];
             }
             $i++;
@@ -102,6 +106,52 @@ class CardController extends Controller
 
         return $card;
 
+    }
+
+    public function checkWinCases($id)
+    {
+        $is_winner = false;
+
+        $card = Card::findOrFail($id);
+        $column_b = $card->column_b;
+        $column_i = $card->column_i;
+        $column_n = $card->column_n;
+        $column_g = $card->column_g;
+        $column_o = $card->column_o;
+
+        $column_b = explode(",", $card->column_b);
+        $column_i = explode(",", $card->column_i);
+        $column_n = explode(",", $card->column_n);
+        $column_g = explode(",", $card->column_g);
+        $column_o = explode(",", $card->column_o);
+
+        if ($column_b[0] <= 0 && $column_i[0] <= 0 && $column_n[0] <= 0 && $column_g[0] <= 0 && $column_o[0] <= 0) {
+            $is_winner = true;
+        } elseif ($column_b[1] <= 0 && $column_i[1] <= 0 && $column_n[1] <= 0 && $column_g[1] <= 0 && $column_o[1] <= 0) {
+            $is_winner = true;
+        } elseif ($column_b[2] <= 0 && $column_i[2] <= 0 && $column_n[2] <= 0 && $column_g[2] <= 0 && $column_o[2] <= 0) {
+            $is_winner = true;
+        } elseif ($column_b[3] <= 0 && $column_i[3] <= 0 && $column_g[3] <= 0 && $column_g[3] <= 0 && $column_o[3] <= 0) {
+            $is_winner = true;
+        } elseif ($column_b[4] <= 0 && $column_i[4] <= 0 && $column_n[4] <= 0 && $column_g[4] <= 0 && $column_o[4] <= 0) {
+            $is_winner = true;
+        } elseif ($column_b[0] <= 0 && $column_b[1] <= 0 && $column_b[2] <= 0 && $column_b[3] <= 0 && $column_b[4] <= 0) {
+            $is_winner = true;
+        } elseif ($column_i[0] <= 0 && $column_i[1] <= 0 && $column_i[2] <= 0 && $column_i[3] <= 0 && $column_i[4] <= 0) {
+            $is_winner = true;
+        } elseif ($column_n[0] <= 0 && $column_n[1] <= 0 && $column_n[2] <= 0 && $column_n[3] <= 0 && $column_n[4] <= 0) {
+            $is_winner = true;
+        } elseif ($column_g[0] <= 0 && $column_g[1] <= 0 && $column_g[2] <= 0 && $column_g[3] <= 0 && $column_g[4] <= 0) {
+            $is_winner = true;
+        } elseif ($column_o[0] <= 0 && $column_o[1] <= 0 && $column_o[2] <= 0 && $column_g[3] <= 0 && $column_o[4] <= 0) {
+            $is_winner = true;
+        }
+
+        if ($is_winner) {
+            return "You win!";
+        } else {
+            return "This card is not winner";
+        }
     }
 
     public function destroy(Card $card)
