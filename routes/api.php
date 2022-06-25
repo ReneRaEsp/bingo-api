@@ -28,3 +28,5 @@ Route::resource('card', CardController::class);
 Route::put('card/mark/{id}', 'App\Http\Controllers\CardController@markSquare');
 
 Route::get('card/check/{id}', 'App\Http\Controllers\CardController@checkWinCases');
+
+Route::get('cards/reset', 'App\Http\Controllers\CardController@resetAllCards');

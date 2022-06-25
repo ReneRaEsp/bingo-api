@@ -68,7 +68,7 @@ class CardController extends Controller
         $i = 0;
         foreach($column_n as $number) {
             if ((int)$number == $number_called){
-                $column_n[$i] = (int)$column_i[$i];
+                $column_n[$i] = (int)$column_n[$i];
                 $column_n[$i] = -$column_n[$i];
             }
             $i++;
@@ -152,6 +152,78 @@ class CardController extends Controller
         } else {
             return "This card is not winner";
         }
+    }
+
+    public function resetAllCards()
+    {
+        $cards = Card::all();
+
+        foreach($cards as $card){
+            $column_b = explode(",", $card->column_b);
+            $column_i = explode(",", $card->column_i);
+            $column_n = explode(",", $card->column_n);
+            $column_g = explode(",", $card->column_g);
+            $column_o = explode(",", $card->column_o);
+
+            $i = 0;
+            foreach($column_b as $number) {
+                if ((int)$number < 0) {
+                    $column_b[$i] = (int)$column_b[$i];
+                    $column_b[$i] = abs($column_b[$i]);
+                }
+                $i++;
+            }
+            $i = 0;
+            foreach($column_i as $number) {
+                if ((int)$number < 0) {
+                    $column_i[$i] = (int)$column_i[$i];
+                    $column_i[$i] = abs($column_i[$i]);
+                }
+                $i++;
+            }
+            $i = 0;
+            foreach($column_n as $number) {
+                if ((int)$number < 0) {
+                    $column_n[$i] = (int)$column_n[$i];
+                    $column_n[$i] = abs($column_n[$i]);
+                }
+                $i++;
+            }
+            $i = 0;
+            foreach($column_g as $number) {
+                if ((int)$number < 0) {
+                    $column_g[$i] = (int)$column_g[$i];
+                    $column_g[$i] = abs($column_g[$i]);
+                }
+                $i++;
+            }
+            $i = 0;
+            foreach($column_o as $number) {
+                if ((int)$number < 0) {
+                    $column_o[$i] = (int)$column_o[$i];
+                    $column_o[$i] = abs($column_o[$i]);
+                }
+                $i++;
+            }
+            $column_b = implode(",", $column_b);
+            $column_i = implode(",", $column_i);
+            $column_n = implode(",", $column_n);
+            $column_g = implode(",", $column_g);
+            $column_o = implode(",", $column_o);
+
+            $card = Card::find($card->id);
+
+
+            $card->column_b = $column_b;
+            $card->column_i = $column_i;
+            $card->column_n = $column_n;
+            $card->column_g = $column_g;
+            $card->column_o = $column_o;
+            
+            $card->save();
+        }
+        
+        return $cards;
     }
 
     public function destroy(Card $card)
