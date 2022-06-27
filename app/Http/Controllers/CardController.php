@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Card;
+use App\Models\Number;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -36,12 +37,24 @@ class CardController extends Controller
     public function markSquare($id, Request $request)
     {
         $card = Card::findOrFail($id);
+        $numbers_called = Number::all();
+        $matchOneTime = false;
         $column_b = $card->column_b;
         $column_i = $card->column_i;
         $column_n = $card->column_n;
         $column_g = $card->column_g;
         $column_o = $card->column_o;
-        $number_called = $request->number;
+        $requested_number = $request->number;
+
+        foreach ($numbers_called as $number_called) {
+            if ($number_called->random_number == $request->number) {
+                $matchOneTime = true;
+            }
+        }
+
+        if (!$matchOneTime) {
+            return "Number not called";
+        }
 
         $column_b = explode(",", $card->column_b);
         $column_i = explode(",", $card->column_i);
@@ -51,7 +64,7 @@ class CardController extends Controller
 
         $i = 0;
         foreach($column_b as $number) {
-            if ((int)$number == $number_called){
+            if ((int)$number == $requested_number){
                 $column_b[$i] = (int)$column_b[$i];
                 $column_b[$i] = -$column_b[$i];
             }
@@ -59,7 +72,7 @@ class CardController extends Controller
         }
         $i = 0;
         foreach($column_i as $number) {
-            if ((int)$number == $number_called){
+            if ((int)$number == $requested_number){
                 $column_i[$i] = (int)$column_i[$i];
                 $column_i[$i] = -$column_i[$i];
             }
@@ -67,7 +80,7 @@ class CardController extends Controller
         }
         $i = 0;
         foreach($column_n as $number) {
-            if ((int)$number == $number_called){
+            if ((int)$number == $requested_number){
                 $column_n[$i] = (int)$column_n[$i];
                 $column_n[$i] = -$column_n[$i];
             }
@@ -75,7 +88,7 @@ class CardController extends Controller
         }
         $i = 0;
         foreach($column_g as $number) {
-            if ((int)$number == $number_called){
+            if ((int)$number == $requested_number){
                 $column_g[$i] = (int)$column_g[$i];
                 $column_g[$i] = -$column_g[$i];
             }
@@ -83,7 +96,7 @@ class CardController extends Controller
         }
         $i = 0;
         foreach($column_o as $number) {
-            if ((int)$number == $number_called){
+            if ((int)$number == $requested_number){
                 $column_o[$i] = (int)$column_o[$i];
                 $column_o[$i] = -$column_o[$i];
             }
