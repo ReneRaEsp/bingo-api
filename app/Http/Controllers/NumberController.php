@@ -27,7 +27,7 @@ class NumberController extends Controller
             }
         }
 
-        if(count($previous_numbers) < 75) {
+        if(count($previous_numbers) < 85) {
             $number->save();
             return $number;
         }
