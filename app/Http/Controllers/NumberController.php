@@ -17,17 +17,19 @@ class NumberController extends Controller
     {
         $number = new Number();
         $previous_numbers = Number::all();
+        $array = [];
 
-        $number->random_number = rand(1, 75);
-
-        foreach ($previous_numbers as $prev)
-        {
-            while ($prev->random_number === $number->random_number){
-                $number->random_number = rand(1, 75);
-            }
+        $i = 0; 
+        foreach($previous_numbers as $prev) {
+            $array[$i] = $prev->random_number;
+            $i++;
         }
 
-        if(count($previous_numbers) < 85) {
+        do {
+            $number->random_number = rand(1, 75);
+        } while (in_array($number->random_number, $array));
+
+        if (count($previous_numbers) < 75) {
             $number->save();
             return $number;
         }

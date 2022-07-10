@@ -256,37 +256,28 @@ class CardController extends Controller
         
         $previous_numbers = [];
         for ($i = 0; $i < 5; $i++) {
-            $column_b[$i] = rand(1, 15);
+            do {
+                $column_b[$i] = rand(1, 15);
+            } while (in_array($column_b[$i], $previous_numbers));
             
-            foreach ($previous_numbers as $prev) {
-                while ($prev === $column_b[$i]) {
-                    $column_b[$i] = rand(1, 15);
-                }
-            }
             $previous_numbers[$i] = $column_b[$i];
         }
 
         $previous_numbers = [];
         for ($i = 0; $i < 5; $i++) {
-            $column_i[$i] = rand(16, 30);
+            do {
+                $column_i[$i] = rand(16, 30);
+            } while (in_array($column_i[$i], $previous_numbers));
             
-            foreach ($previous_numbers as $prev) {
-                while ($prev === $column_i[$i]) {
-                    $column_i[$i] = rand(16, 30);
-                }
-            }
             $previous_numbers[$i] = $column_i[$i];
         }
 
         $previous_numbers = [];
         for ($i = 0; $i < 5; $i++) {
-            $column_n[$i] = rand(31, 45);
+            do {
+                $column_n[$i] = rand(31, 45);
+            } while (in_array($column_n[$i], $previous_numbers));
             
-            foreach ($previous_numbers as $prev) {
-                while ($prev === $column_n[$i]) {
-                    $column_n[$i] = rand(31, 45);
-                }
-            }
             if ($i === 2) {
                 $column_n[$i] = 0;
             }
@@ -295,25 +286,17 @@ class CardController extends Controller
 
         $previous_numbers = [];
         for ($i = 0; $i < 5; $i++) {
-            $column_g[$i] = rand(46, 60);
-            
-            foreach ($previous_numbers as $prev) {
-                while ($prev === $column_g[$i]) {
-                    $column_g[$i] = rand(46, 60);
-                }
-            }
+            do {
+                $column_g[$i] = rand(46, 60);
+            } while (in_array($column_g[$i], $previous_numbers));
             $previous_numbers[$i] = $column_g[$i];
         }
 
         $previous_numbers = [];
         for ($i = 0; $i < 5; $i++) {
-            $column_o[$i] = rand(61, 75);
-            
-            foreach ($previous_numbers as $prev) {
-                while ($prev === $column_o[$i]) {
-                    $column_o[$i] = rand(61, 75);
-                }
-            }
+            do {
+                $column_o[$i] = rand(61, 75);
+            } while (in_array($column_o[$i], $previous_numbers));
             $previous_numbers[$i] = $column_o[$i];
         }
 
